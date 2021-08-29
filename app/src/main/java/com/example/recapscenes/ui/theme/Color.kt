@@ -8,5 +8,13 @@ val Purple700 = Color(0xFF3700B3)
 val Teal200 = Color(0xFF03DAC5)
 
 
-val PrimaryPurple = Color(0xFF392382)
-val Secondaryurple = Color(0xFF2C1B64)
+
+val Blue1 = Color(0xFF2471A4)
+
+
+
+val PrimaryColor = Color(0xFFA8D2FF)
+val SecondaryColor = Color(0xFF7EBCFF)
+
+val ButtonColor = Color(0xFF3779A3)
+val WeekDayColor = Color(0xFFCFE5FD)

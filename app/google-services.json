@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "176531017219",
+    "project_id": "recapscenes",
+    "storage_bucket": "recapscenes.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:176531017219:android:4b273bcf2ccef96b354836",
+        "android_client_info": {
+          "package_name": "com.example.recapscenes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "176531017219-9aaig40m7ggkbcsht7qqjgb4mll2fqs5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZA-Ly6u7UHiIKN0KShCaY2___sMjFLEQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "176531017219-9aaig40m7ggkbcsht7qqjgb4mll2fqs5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

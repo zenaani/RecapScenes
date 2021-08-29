@@ -1,8 +1,12 @@
 package com.example.recapscenes
 
+import android.app.*
 import android.content.Context
 import android.content.Intent
+import android.icu.number.NumberRangeFormatter.with
+import android.os.Build
 import android.os.Bundle
+import android.os.Parcel
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
@@ -10,368 +14,343 @@ import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.recapscenes.ui.theme.*
+import com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerScheduler
+import java.security.AccessController.getContext
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 var currentDay = ""
 class MainActivity : ComponentActivity() {
+
+
+    val CHANNEL_ID = "channelID"
+    val CHANNEL_NAME = "channelName"
+    val NOTIFICATION_ID = 0
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
 
-            val blah = Modifier.clickable(enabled = true, onClick = {} )
-
-            val contextShit = this@MainActivity
 
             val scrollStateV = rememberScrollState()
-
-            val scrollStateH = rememberScrollState()
-
             val navControllerShit = rememberNavController()
 
-            //Add if selectedChipIndex and change colour
-            var selectedChipIndex by remember {
-                mutableStateOf(0)
-            }
+
+            //implement for loop in composables for time constraint
 
 
-            //Or add WeekDays at the last to >>>> accessibility 
+            //Use AlarmManager or WorkManafger
+            //Refer YT video with keyword AlarmManger
 
 
 
-            //Outer Layout Column
-            Column() {
-                
 
-                //Greetings
-                Text(
-                    modifier = Modifier
-                    .padding(10.dp),
-                    text = "Good Morning Bitch!",
-                    color = Purple500,
-                    fontSize = 35.sp
+
+
+            //Fix the bugs regarding selected chip index
+            //listOf
+
+            //Add if selectedChipIndex and change colour for Sure
+
+
+            //Play with Opacity
+            //Implement motionlayput
+
+
+
+            //Change background opacity continuously like breathing (using Motion Layout)
+
+            //For Background
+            Box(
+                modifier = Modifier
+                        .fillMaxSize()
+            ) {
+
+                /*
+                Image(
+                    modifier = Modifier.fillMaxSize(),
+                    painter = painterResource(id = R.drawable.cool),
+                    contentDescription = "spidey",
+                    contentScale = ContentScale.Crop,
                 )
 
+                 */
 
-                //Circle Links Here
-                Row(
+
+                //For Seperating Top and Bottom Section
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(10.dp, 0.dp)
-                        .horizontalScroll(scrollStateH)
-                ) {
-                    CircleLink(subject = "ss", context = contextShit)
-                    CircleLink(subject = "cam", context = contextShit)
-                    CircleLink(subject = "ac", context = contextShit)
-                    CircleLink(subject = "pe", context = contextShit)
-                    CircleLink(subject = "se", context = contextShit)
-                    CircleLink(subject = "mat", context = contextShit)
-                    CircleLink(subject = "min", context = contextShit)
-                }
-
-
-                //Weekdays Row
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(10.dp, 0.dp, 10.dp, 0.dp),
-                ) {
-                    WeekdaySelectionShit(day = "Monday", route = "monday", navController = navControllerShit)
-                    WeekdaySelectionShit(day = "Tuesday", route = "tuesday", navController = navControllerShit)
-                    WeekdaySelectionShit(day = "Wednesday", route = "wednesday", navController = navControllerShit)
-                }
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(10.dp, 0.dp, 10.dp, 5.dp),
-                ) {
-                    WeekdaySelectionShit(day = "Thursday", route = "thursday", navController = navControllerShit)
-                    WeekdaySelectionShit(day = "Friday", route = "friday", navController = navControllerShit)
-                }
-
-
-
-                //Fragment Starts here
-
-                Box(
-                    modifier = Modifier
-                        .padding(25.dp, 0.dp, 25.dp, 25.dp)
-                        .background(color = PrimaryPurple, shape = RoundedCornerShape(25.dp))
-                        .padding(25.dp)
-
+                        .background(color = Color.White)
+                        .fillMaxSize()
                 ) {
 
-                    //Column for Day Title and BoxLayout Composables
 
+
+                    //Top Section First Layer
                     Column(
                         modifier = Modifier
-                            .verticalScroll(scrollStateV)
+                            .background(
+                                color = SecondaryColor,
+                                shape = RoundedCornerShape(0.dp, 0.dp, 50.dp, 50.dp)
+                            )
                     ) {
 
-                        NavHost(navController = navControllerShit, startDestination = "monday") {
+                        //Top Section Second Layer
+                        Column(
+                            modifier = Modifier
+                                .background(
+                                    color = PrimaryColor,
+                                    //brush = Brush.verticalGradient(colors = mutableStateListOf(Blue1, Blue2)),
+                                    shape = RoundedCornerShape(0.dp, 0.dp, 50.dp, 50.dp)
 
-                            composable(route = "monday") {
-                                Monday(navController = navControllerShit, context = contextShit)
-                            }
-                            composable(route = "tuesday") {
-                                Tuesday(navController = navControllerShit, context = contextShit)
+                                )
+                        ) {
+
+                            Button(onClick = {
+
+
+
+
+
+                                setAlarm(this@MainActivity,3000)
+
+
+
+
+
+
+                            }) {
+                                Text(text = "Show / Schedule Notification")
                             }
 
-                            composable(route = "wednesday") {
-                                Wednesday(navController = navControllerShit, context = contextShit)
+                            Spacer(modifier = Modifier.padding(50.dp))
+
+                            Text(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                text = "Greetings Bitches",
+                                fontSize = 40.sp,
+                                textAlign = TextAlign.Center,
+                                color = Blue1
+                            )
+
+                            Spacer(modifier = Modifier.padding(10.dp))
+
+
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                horizontalArrangement = Arrangement.Center
+
+                            ) {
+                                CircleLink(subject = "SS")
+                                CircleLink(subject = "CAM")
+                                CircleLink(subject = "AC")
                             }
 
-                            composable(route = "thursday") {
-                                Thursday(navController = navControllerShit, context = contextShit)
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                horizontalArrangement = Arrangement.Center
+
+                            ) {
+                                CircleLink(subject = "PE")
+                                CircleLink(subject = "SE")
+                                CircleLink(subject = "MAT")
+                                CircleLink(subject = "MIN")
                             }
 
-                            composable(route = "friday") {
-                                Friday(navController = navControllerShit, context = contextShit)
-                            }
+                            Spacer(modifier = Modifier.padding(15.dp))
 
                         }
+                        //Top Section Second Layer End
 
+                        Spacer(modifier = Modifier.padding(10.dp))
+
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(60.dp, 0.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            WeekdaySelectionShit(day = "M",
+                                route = "monday",
+                                navController = navControllerShit
+                            )
+                            WeekdaySelectionShit(day = "T",
+                                route = "tuesday",
+                                navController = navControllerShit
+                            )
+                            WeekdaySelectionShit(day = "W",
+                                route = "wednesday",
+                                navController = navControllerShit
+                            )
+                            WeekdaySelectionShit(day = "T",
+                                route = "thursday",
+                                navController = navControllerShit
+                            )
+                            WeekdaySelectionShit(day = "F",
+                                route = "friday",
+                                navController = navControllerShit
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.padding(10.dp))
+
+                    }
+                    //Top Section First Layer End
+
+
+                    //Bottom Section
+
+                    Box(
+                        modifier = Modifier
+                            .padding(30.dp)
+                        //.background(color = PrimaryPurple, shape = RoundedCornerShape(25.dp))
+                        //.padding(25.dp)
+
+                    ) {
+
+                        //Column for Day Title and BoxLayout Composables
+
+                        Column(
+                            modifier = Modifier
+                                .verticalScroll(scrollStateV)
+                        ) {
+
+                            NavHost(navController = navControllerShit, startDestination = "monday") {
+
+                                composable(route = "monday") {
+                                    Monday(navController = navControllerShit)
+                                }
+                                composable(route = "tuesday") {
+                                    Tuesday(navController = navControllerShit)
+                                }
+
+                                composable(route = "wednesday") {
+                                    Wednesday(navController = navControllerShit)
+                                }
+
+                                composable(route = "thursday") {
+                                    Thursday(navController = navControllerShit)
+                                }
+
+                                composable(route = "friday") {
+                                    Friday(navController = navControllerShit)
+                                }
+
+                            }
+
+
+                        }
 
 
                     }
 
 
-
                 }
-
-
-                //Fragment Ends here
-
 
             }
 
-
         }
     }
-}
+
+    fun createNotificationChannel() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            val mChannel = NotificationChannel("asd", CHANNEL_NAME,NotificationManager.IMPORTANCE_HIGH)
+
+            val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            manager.createNotificationChannel(mChannel)
 
 
-
-/*
-@Composable
-fun Profile(navController: NavController) {
-    /*...*/
-    Button(onClick = { navController.navigate("friendslist") }) {
-        Text(text = "Navigate next")
-    }
-    /*...*/
-}
-
-@Composable
-fun FriendsList(navController: NavController) {
-    /*...*/
-    Button(onClick = { navController.navigate("profile") }) {
-        Text(text = "Navigate shit")
-    }
-    /*...*/
-}
-
- */
-
-
-@Composable
-fun CircleLink(subject: String, context: Context) {
-    var shittyIntent: Intent = ss
-
-    when (subject) {
-        "cam" -> shittyIntent = cam
-        "ss" -> shittyIntent = ss
-        "ac" -> shittyIntent = ac
-        "pe" -> shittyIntent = pe
-        "mat" -> shittyIntent = mat
-    }
-
-    Button(
-        modifier = Modifier
-            .padding(5.dp)
-            .height(65.dp)
-            .width(65.dp),
-        onClick = {
-            startActivity(context, shittyIntent, null)
-                  },
-        shape = RoundedCornerShape(100.dp)
-    ) {
-        Text(text = subject)
-    }
-}
-
-
-
-@Composable
-fun WeekdaySelectionShit(day: String, route: String, navController: NavController) {
-    Button(
-        modifier = Modifier
-            .padding(5.dp),
-        onClick = { navController.navigate(route) },
-        shape = RoundedCornerShape(25.dp)
-    ) {
-        Text(text = day)
-    }
-}
-
-@Composable
-fun Monday(navController: NavController, context: Context) {
-    Column(
-        modifier = Modifier
-        .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        SubjectBoxGridShit(subject = "cam",context = context, time = "9.30 - 10.30")
-        SubjectBoxGridShit(subject = "ac",context = context, time = "10.30 - 10.30")
-        SubjectBoxGridShit(subject = "ss",context = context, time = "11.30 - 10.30")
-        SubjectBoxGridShit(subject = "pe",context = context, time = "12.30 - 10.30")
-        SubjectBoxGridShit(subject = "mat",context = context, time = "1.30 - 10.30")
-    }
-}
-
-@Composable
-fun Tuesday(navController: NavController, context: Context) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        SubjectBoxGridShit(subject = "shit",context = context, time = "9.30 - 10.30")
-        SubjectBoxGridShit(subject = "bitch",context = context, time = "10.30 - 10.30")
-        SubjectBoxGridShit(subject = "its",context = context, time = "11.30 - 10.30")
-        SubjectBoxGridShit(subject = "working",context = context, time = "12.30 - 10.30")
-        SubjectBoxGridShit(subject = "hohoho",context = context, time = "1.30 - 10.30")
-    }
-}
-
-@Composable
-fun Wednesday(navController: NavController, context: Context) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        SubjectBoxGridShit(subject = "shit",context = context, time = "9.30 - 10.30")
-        SubjectBoxGridShit(subject = "bitch",context = context, time = "10.30 - 10.30")
-        SubjectBoxGridShit(subject = "its",context = context, time = "11.30 - 10.30")
-        SubjectBoxGridShit(subject = "working",context = context, time = "12.30 - 10.30")
-        SubjectBoxGridShit(subject = "lol fk",context = context, time = "1.30 - 10.30")
-    }
-}
-
-@Composable
-fun Thursday(navController: NavController, context: Context) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        SubjectBoxGridShit(subject = "cam",context = context, time = "9.30 - 10.30")
-        SubjectBoxGridShit(subject = "ac",context = context, time = "10.30 - 10.30")
-        SubjectBoxGridShit(subject = "ss",context = context, time = "11.30 - 10.30")
-        SubjectBoxGridShit(subject = "pe",context = context, time = "12.30 - 10.30")
-        SubjectBoxGridShit(subject = "mat",context = context, time = "1.30 - 10.30")
-    }
-}
-
-@Composable
-fun Friday(navController: NavController, context: Context) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        SubjectBoxGridShit(subject = "cam",context = context, time = "9.30 - 10.30")
-        SubjectBoxGridShit(subject = "ac",context = context, time = "10.30 - 10.30")
-        SubjectBoxGridShit(subject = "ss",context = context, time = "11.30 - 10.30")
-        SubjectBoxGridShit(subject = "pe",context = context, time = "12.30 - 10.30")
-        SubjectBoxGridShit(subject = "mat",context = context, time = "1.30 - 10.30")
-    }
-}
-
-
-
-@Composable
-fun SubjectBoxGridShit(subject: String, context: Context, time: String) {
-    var shitIntent: Intent = ss
-
-    when (subject) {
-        "cam" -> shitIntent = cam
-        "ss" -> shitIntent = ss
-        "ac" -> shitIntent = ac
-        "pe" -> shitIntent = pe
-        "mat" -> shitIntent = mat
-    }
-
-    Row() {
-
-        Button(
-            modifier = Modifier
-                .fillMaxWidth(0.5f)
-                .size(0.dp, 110.dp),
-            onClick = { /*TODO*/ },
-            shape = RoundedCornerShape(25.dp),
-            //colors = ButtonDefaults.buttonColors(backgroundColor = Purple700)
-        ) {
-            Text(text = time)
-        }
-
-        Spacer(modifier = Modifier.padding(5.dp))
-
-        Button(
-            modifier = Modifier
-                .fillMaxWidth(1f)
-                .size(0.dp, 110.dp),
-            onClick = {
-                startActivity(context, shitIntent, null)
-            },
-            shape = RoundedCornerShape(25.dp),
-            //colors = ButtonDefaults.buttonColors(backgroundColor = Purple700)
-        ) {
-            Text(
-                text = subject,
-                fontSize = 25.sp
-            )
         }
 
     }
 
-    Spacer(modifier = Modifier.padding(5.dp))
+    fun setAlarm(context: Context, timeOfAlarm: Long) {
+
+        // Intent to start the Broadcast Receiver
+        val broadcastIntent = Intent(context, NotificationReceiver::class.java)
+
+        val pIntent = PendingIntent.getBroadcast(
+            context,
+            0,
+            broadcastIntent,
+            0
+        )
+
+        // Setting up AlarmManager
+        val alarmMgr = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        alarmMgr.set(
+            AlarmManager.RTC_WAKEUP,
+            System.currentTimeMillis() + 1000,
+            pIntent
+        )
+
+        /*
+
+        if (System.currentTimeMillis() < timeOfAlarm) {
+
+        }
+
+         */
+    }
+
+
 }
 
 
-/*
-fun uriParser(context: Context, intent: Intent) {
-    startActivity(context,intent, null)
-}
 
- */
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     RecapScenesTheme {
+
+
+
+
+
+
+
 
 
 
